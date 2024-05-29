@@ -11,7 +11,7 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
         if(userCheck){
             res.json({msg:"User already exists."})
         }
-        
+
         User.create({
             fname: data.fname,
             lname: data.lname,
@@ -28,5 +28,25 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
     } catch (error: any) {
         console.log('Error in signup', error)
         res.json({ msg: 'Error in signup', error })
+    }
+}
+
+export const signin = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const data = req.body.user
+
+        console.log(data)
+
+        const userCheck = await User.findOne({email: data.email})
+
+        if(!userCheck){
+            res.json({msg:"User does not exist.", validUser:false})
+            return
+        }
+
+        res.json({msg:"User exists.", validUser:true})
+    } catch (error: any) {
+        console.log('Error in signin', error)
+        res.json({ msg: 'Error in signin', error })
     }
 }
