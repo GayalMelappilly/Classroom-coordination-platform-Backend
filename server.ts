@@ -3,6 +3,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import connectDB from './db/connection'
 import userRouter from './routes/user.route'
+import authRouter from './routes/auth.route'
 import addCurrentIPToWhitelist from './middlewares/whiteListIp'
 
 const app = express()
@@ -19,6 +20,7 @@ app.use(cors({
 
 addCurrentIPToWhitelist()
 
+app.use('/auth', authRouter)
 app.use('/user', userRouter)
 
 app.listen(5000, () => {

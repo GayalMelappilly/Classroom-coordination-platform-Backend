@@ -11,7 +11,7 @@
   },
   "include": [
     "*.ts",                        // Include all TypeScript files in the root directory
-    "backend/**/*.ts"              // Include all TypeScript files in the backend directory
+    "/**/*.ts"              // Include all TypeScript files in the backend directory
   ],
   "exclude": [
     "node_modules"

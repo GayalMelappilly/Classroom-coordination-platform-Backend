@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import User from '../models/User.models'
+import User from '../models/User.model'
 
 export const addUser = async (req: Request, res: Response): Promise<void> => {
     try {

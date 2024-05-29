@@ -5,8 +5,6 @@ const connectDB = async (): Promise<void> => {
     const uri = process.env.MONGO_DB_URI as string
 
     try {
-        console.log("DB : ",uri);
-        
         await mongoose.connect(uri, {
             ssl: true,
           })
