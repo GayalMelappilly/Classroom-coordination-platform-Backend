@@ -1,24 +1,32 @@
 import mongoose, { Schema, model } from 'mongoose'
 
 interface IUser {
-    fname: string,
-    lname: string,
-    username: string,
+    type:string,
+    googleId?:string,
+    fname?: string,
+    lname?: string,
+    displayName: string,
     email: string,
-    password: string,
-    verified: boolean
+    image?: string,
+    password?: string,
+    verified?: boolean
 }
 
 const userSchema = new Schema<IUser>({
+    type:{
+        type:String,
+        required:true
+    },
+    googleId:{
+        type:String,
+    },
     fname:{
         type:String,
-        required: true
     },
     lname:{
         type:String,
-        required: true
     },
-    username:{
+    displayName:{
         type:String,
         required: true
     },
@@ -26,13 +34,15 @@ const userSchema = new Schema<IUser>({
         type:String,
         required: true
     },
-    password:{
+    image:{
         type:String,
         required: true
     },
+    password:{
+        type:String,
+    },
     verified:{
         type:Boolean,
-        default: false
     }
 })
 

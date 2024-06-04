@@ -2,9 +2,12 @@ import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import connectDB from './db/connection'
+import session from 'express-session'
 import userRouter from './routes/user.route'
 import authRouter from './routes/auth.route'
 import addCurrentIPToWhitelist from './middlewares/whiteListIp'
+import './middlewares/passport'
+import passport from 'passport'
 
 const app = express()
 
@@ -17,8 +20,20 @@ app.use(cors({
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     optionsSuccessStatus: 200
 }))
+app.use(session({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24,
+        secure: false,
+    }
+}))
 
 addCurrentIPToWhitelist()
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use('/auth', authRouter)
 app.use('/user', userRouter)
