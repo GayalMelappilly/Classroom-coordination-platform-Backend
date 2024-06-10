@@ -1,6 +1,6 @@
-import mongoose, { Schema, model } from 'mongoose'
+import mongoose, { Document, Schema, model } from 'mongoose'
 
-interface IUser {
+interface IUser extends Document {
     type:string,
     googleId?:string,
     fname?: string,
@@ -49,3 +49,4 @@ const userSchema = new Schema<IUser>({
 const User =  mongoose.model<IUser>('User', userSchema)
 
 export default User
+export { IUser }
