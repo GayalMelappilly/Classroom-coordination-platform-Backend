@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import User from "../models/User.model"
+import generateOtp from '../utils/generateOtp'
 
 export const signupWithGoogle = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -20,7 +21,14 @@ export const signupWithGoogle = async (req: Request, res: Response): Promise<voi
     }
 }
 
-export const 
+export const verifyEmail = async (req: Request, res: Response): Promise<void> => {
+    try {
+        console.log("OTP : ",generateOtp())
+        res.json({ msg: "OTP sent to email" })
+    } catch (error) {
+        
+    }
+}
 
 export const signupWithEmailAndPassword = async (req: Request, res: Response): Promise<void> => {
     try {
