@@ -5,28 +5,28 @@ import generateOtp from '../utils/generateOtp'
 export const signupWithGoogle = async (req: Request, res: Response): Promise<void> => {
     try {
         const data = req.user as Express.User
-        console.log("GOOGLE SIGNUP : ",data)
-        console.log("EMAIL : ",data.email)
+        console.log("GOOGLE SIGNUP : ", data)
+        console.log("EMAIL : ", data.email)
 
-        if(data){
+        if (data) {
             const userCheck = await User.findOne({ email: data.email })
             // console.log(userCheck)
         }
 
-        res.json({msg:"Signup successful", data})
+        res.json({ msg: "Signup successful", data })
 
     } catch (error) {
         console.log('ERROR IN GOOGLE SIGNUP')
-        res.json({msg:"Error in signup", error})
+        res.json({ msg: "Error in signup", error })
     }
 }
 
 export const verifyEmail = async (req: Request, res: Response): Promise<void> => {
     try {
-        console.log("OTP : ",generateOtp())
+        console.log("OTP : ", generateOtp())
         res.json({ msg: "OTP sent to email" })
     } catch (error) {
-        
+
     }
 }
 
@@ -37,9 +37,9 @@ export const signupWithEmailAndPassword = async (req: Request, res: Response): P
 
         const userCheck = await User.findOne({ email: data.email })
 
-        if (userCheck) {
-            res.json({ msg: "User already exists." })
-        }
+        // if (userCheck) {
+        //     res.json({ msg: "User already exists." })
+        // }
 
         User.create({
             type: "Email",
@@ -48,13 +48,10 @@ export const signupWithEmailAndPassword = async (req: Request, res: Response): P
             displayName: data.username,
             email: data.email,
             password: data.password
-        }).then(() => {
-            console.log('User Created')
-            res.json({ msg: 'User Created' })
-        }).catch((err: any) => {
-            console.log('Error in signup', err)
-            res.json({ msg: 'Error in signup', err })
         })
+
+        console.log('User Created')
+        res.status(200).json({ msg: 'User Created' })
     } catch (error: any) {
         console.log('Error in signup', error)
         res.json({ msg: 'Error in signup', error })

@@ -36,7 +36,6 @@ const userSchema = new Schema<IUser>({
     },
     image:{
         type:String,
-        required: true
     },
     password:{
         type:String,
