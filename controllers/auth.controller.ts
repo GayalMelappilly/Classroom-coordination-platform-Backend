@@ -1,15 +1,16 @@
 import { Request, Response } from "express"
 import User from "../models/User.model"
 import generateOtp from '../utils/generateOtp'
+import generateToken from '../utils/generateToken'
 
 export const signupWithGoogle = async (req: Request, res: Response): Promise<void> => {
     try {
         const data = req.user as Express.User
         console.log("GOOGLE SIGNUP : ", data)
-        console.log("EMAIL : ", data.email)
+        // console.log("EMAIL : ", data.email)
 
         if (data) {
-            const userCheck = await User.findOne({ email: data.email })
+            // const userCheck = await User.findOne({ email: data.email })
             // console.log(userCheck)
         }
 
@@ -35,13 +36,13 @@ export const signupWithEmailAndPassword = async (req: Request, res: Response): P
         const data = req.body.user
         console.log(data)
 
-        const userCheck = await User.findOne({ email: data.email })
+        // const userCheck = await User.findOne({ email: data.email })
 
         // if (userCheck) {
         //     res.json({ msg: "User already exists." })
         // }
 
-        User.create({
+        const newUser = User.create({
             type: "Email",
             fname: data.fname,
             lname: data.lname,
@@ -49,8 +50,11 @@ export const signupWithEmailAndPassword = async (req: Request, res: Response): P
             email: data.email,
             password: data.password
         })
-
+    
         console.log('User Created')
+
+        generateToken(newUser, res)
+
         res.status(200).json({ msg: 'User Created' })
     } catch (error: any) {
         console.log('Error in signup', error)
