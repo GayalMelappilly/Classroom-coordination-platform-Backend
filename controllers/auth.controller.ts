@@ -2,6 +2,7 @@ import { Request, Response } from "express"
 import User from "../models/User.model"
 import generateOtp from '../utils/generateOtp'
 import generateToken from '../utils/generateToken'
+import {hashPassword, comparePassword} from '../utils/hashPassword'
 
 export const signupWithGoogle = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -42,13 +43,17 @@ export const signupWithEmailAndPassword = async (req: Request, res: Response): P
         //     res.json({ msg: "User already exists." })
         // }
 
+        const hashedPassword = await hashPassword(data.password)
+
+        console.log('HASHED : ',hashedPassword)
+
         const newUser = User.create({
             type: "Email",
             fname: data.fname,
             lname: data.lname,
             displayName: data.username,
             email: data.email,
-            password: data.password
+            password: hashedPassword
         })
     
         console.log('User Created')

@@ -7,15 +7,13 @@ const generateTokenAndSetCookie = (user: object, res: Response):void => {
         expiresIn: '15d'
     })
 
-    console.log("TOKEN : ",token)
-
     res.cookie('jwt', token, {
         httpOnly: true,
         secure: false,
         sameSite: 'strict',
         maxAge: 15 * 24 * 60 * 60 * 1000
     })
-    console.log("GENERATING TOKEN")
+    console.log("Token generated")
 }
 
 export default generateTokenAndSetCookie
